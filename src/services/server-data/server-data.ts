@@ -2,6 +2,8 @@ import { Project } from "../../entity/Project/project";
 import axios, { AxiosResponse } from "axios";
 import { IFeedbackForm } from "../../features/main-page/feedback-form/feedback-form.component";
 
+export const siteHost = process.env.NEXT_PUBLIC_SITE_URL
+
 export const currentHost = process.env.NEXT_PUBLIC_API_URL
 
 const defaultOptions = {

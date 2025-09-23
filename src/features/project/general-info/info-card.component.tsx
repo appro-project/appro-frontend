@@ -5,7 +5,7 @@ import { Button, ButtonType } from '@/components/ui/button/button.component'
 
 import { useTranslation } from 'react-i18next'
 import { usePathname } from 'next/navigation'
-import { currentHost } from '@/services/server-data/server-data'
+import { siteHost } from '@/services/server-data/server-data'
 import { useModalStore } from '@/modal/order-modal-container.store'
 
 enum TypeOfHouse {
@@ -35,7 +35,7 @@ export const InfoCard = (props: InfoCardProps) => {
 	const { t } = useTranslation()
 
 	const pathname = usePathname()
-	const projectLink = currentHost + pathname
+	const projectLink = siteHost + pathname
 
 	const { openModal } = useModalStore()
 	const handleOpenModal = () => {

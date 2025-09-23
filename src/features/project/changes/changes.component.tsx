@@ -4,7 +4,7 @@ import project_modification from '@/assets/img/project-page/project-modification
 import { Button, ButtonType } from '@/components/ui/button/button.component'
 import { ProjectDto } from '@/api/model'
 import { usePathname } from 'next/navigation'
-import { currentHost } from '@/services/server-data/server-data'
+import { siteHost } from '@/services/server-data/server-data'
 import { useModalStore } from '@/modal/order-modal-container.store'
 import Image from 'next/image'
 
@@ -16,7 +16,7 @@ export const Changes = ({ project }: IChangesProps) => {
 	const { t } = useTranslation()
 
 	const pathname = usePathname()
-	const projectLink = currentHost + pathname
+	const projectLink = siteHost + pathname
 
 	const { openModal } = useModalStore()
 	const handleOpenModal = () => {
