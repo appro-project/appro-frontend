@@ -266,7 +266,9 @@
       "foundation": "фундамент",
       "ceilings": "перекрытия",
       "roof": "кровля",
-      "construction_price": "цена строительства"
+      "construction_price": "цена строительства",
+      "attic_height": "высота мансарды",
+      "attic_area": "площадь мансарды"
     },
     "composition": {
       "title": "Состав проекта",

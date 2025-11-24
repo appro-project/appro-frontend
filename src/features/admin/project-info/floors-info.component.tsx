@@ -17,8 +17,9 @@ export const FloorsInfo: FC<ProjectProps> = ({
 		floorId: number
 	) => {
 		const floors = [...projectDto.floors];
-		const index = parseInt(event.target.value);
-		floors.filter(i => i.id === floorId).forEach(i => (i.index = index));
+		const index =
+			event.target.value === '' ? null : parseInt(event.target.value)
+		floors.filter(i => i.id === floorId).forEach(i => (i.index = index))
 
 		dispatch({ type: 'floors', payload: floors });
 	}
@@ -68,7 +69,8 @@ export const FloorsInfo: FC<ProjectProps> = ({
 		floorId: number
 	) => {
 		const floors = [...projectDto.floors]
-		const area = parseInt(event.target.value);
+		const area =
+			event.target.value === '' ? null : parseFloat(event.target.value)
 		floors.filter(i => i.id === floorId).forEach(i => (i.area = area))
 
 		dispatch({ type: 'floors', payload: floors });
@@ -79,7 +81,8 @@ export const FloorsInfo: FC<ProjectProps> = ({
 		floorId: number
 	) => {
 		const floors = [...projectDto.floors]
-		const height = parseInt(event.target.value);
+		const height =
+			event.target.value === '' ? null : parseFloat(event.target.value)
 		floors.filter(i => i.id === floorId).forEach(i => (i.height = height))
 
 		dispatch({ type: 'floors', payload: floors });
