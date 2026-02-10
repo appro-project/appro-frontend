@@ -20,6 +20,8 @@ export const ProjectLayout = (props: Props) => {
 
 	const floors = project.floors.filter(f => !(f.isBasement || f.isAttic))
 
+	const isAttic = project.floors.some(f => f.isAttic)
+
 	const { t } = useTranslation()
 
 	return (
@@ -51,6 +53,13 @@ export const ProjectLayout = (props: Props) => {
 							</li>
 						))}
 
+						{isAttic && (
+							<li className={classes.ProjectLayout_InfoItem}>
+								<span>{t('project.layout.attic_area')}</span>
+								<b>{project.floors.find(f => f.isAttic)?.area} м2</b>
+							</li>
+						)}
+
 						<li className={classes.ProjectLayout_InfoItem}>
 							<span>{t('project.layout.living_area')}</span>
 							<b>{project.livingArea} м2</b>
@@ -76,9 +85,16 @@ export const ProjectLayout = (props: Props) => {
 								<span>
 									{t('project.layout.floor_height', { index: f.index })}
 								</span>
-								<b>{f.height}</b>
+								<b>{f.height} м</b>
 							</li>
 						))}
+
+						{isAttic && (
+							<li className={classes.ProjectLayout_InfoItem}>
+								<span>{t('project.layout.attic_height')}</span>
+								<b>{project.floors.find(f => f.isAttic)?.height} м</b>
+							</li>
+						)}
 
 						<li className={classes.ProjectLayout_InfoItem}>
 							<span>{t('project.layout.walls')}</span>

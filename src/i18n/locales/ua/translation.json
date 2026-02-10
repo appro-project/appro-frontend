@@ -266,7 +266,9 @@
       "foundation": "фундамент",
       "ceilings": "перекриття",
       "roof": "дах",
-      "construction_price": "ціна будівництва"
+      "construction_price": "ціна будівництва",
+      "attic_height": "висота мансарди",
+      "attic_area": "площа мансарди"
     },
     "composition": {
       "title": "Склад проекту",
