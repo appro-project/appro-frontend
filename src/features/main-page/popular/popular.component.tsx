@@ -1,15 +1,14 @@
+"use client";
 import { Container } from '@/containers/hoc/container/container'
 import { PopularCategory } from './popular-category/popular-category.component'
 import classes from './popular.module.scss'
-import { PopularCategoryData } from '@/entity/PopularCategoryData/popular-category-data'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { getPopularCategories } from '@/redux/selectors'
 
-interface PropsType {
-	popularCategories: PopularCategoryData[]
-}
-
-export const Popular = ({ popularCategories }: PropsType) => {
+export const Popular = () => {
 	const { t } = useTranslation()
+	const popularCategories = useSelector(getPopularCategories)
 
 	return (
 		<section id={'popular-category'} className={classes['popularCategories']}>

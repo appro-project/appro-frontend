@@ -16,7 +16,7 @@ export const Additional = () => {
 
 	const { openModal } = useModalStore()
 	const handleOpenModal = () => {
-		openModal(null, t('modal.title_contact'))
+		openModal('', t('modal.title_contact'))
 	}
 
 	return (

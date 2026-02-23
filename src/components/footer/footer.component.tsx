@@ -1,3 +1,4 @@
+'use client'
 import { Container } from '@/containers/hoc/container/container'
 
 import { useTranslation } from 'react-i18next'
