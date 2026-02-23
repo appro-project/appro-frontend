@@ -28,7 +28,7 @@ export const Header = () => {
 	const { openModal } = useModalStore()
 	const handleOpenModal = () => {
         //TODO: fix type
-		openModal(null, t('modal.title_contact'))
+		openModal('', t('modal.title_contact'))
 	}
 
 	return (

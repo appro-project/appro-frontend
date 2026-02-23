@@ -1,34 +1,22 @@
-"use client";
-
-import { Welcome } from "@/features/main-page/welcome/welcome-page.component";
-import { Popular } from "@/features/main-page/popular/popular.component";
-import { Principles } from "@/features/main-page/principles/principles.component";
-import { Feedback } from "@/features/main-page/feedback-form/feedback-form.component";
-import { About } from "@/features/main-page/about/about.component";
-import { useSelector } from "react-redux";
 import {
-  getPopularCategories,
-  getPrinciplesData,
-} from "../../redux/selectors";
-import { useGetAllProjects } from "../../api/use-get-all-projects";
-import { ProjectDto } from "@/api/model";
-import { FullSizeLoader } from "@/components/full-size-loader.component";
+  dehydrate,
+  HydrationBoundary,
+} from "@tanstack/react-query";
+import { fetchAllProjects, PROJECTS_QUERY_KEY } from "@/api/projects-query";
+import { HomeContent } from "@/features/main-page/home-content";
+import { createQueryClient } from "@/utils/react-query/react-query-util";
 
-export default function Home() {
-  const { data: projects } = useGetAllProjects();
-  const popularCategories = useSelector(getPopularCategories);
-  const principlesData = useSelector(getPrinciplesData);
+export default async function Home() {
+  const queryClient = createQueryClient();
 
-  if (!projects) return <FullSizeLoader />;
+  await queryClient.prefetchQuery({
+    queryKey: PROJECTS_QUERY_KEY,
+    queryFn: fetchAllProjects,
+  });
 
-  const welcomeProjects = projects.filter((project: ProjectDto) => project.showOnMain);
   return (
-    <>
-      <Welcome mockProjects={welcomeProjects} />
-      <Popular popularCategories={popularCategories} />
-      <About /> 
-      <Principles principlesData={principlesData} />
-      <Feedback />
-    </>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <HomeContent />
+    </HydrationBoundary>
   );
-};
+}

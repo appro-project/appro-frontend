@@ -2,15 +2,13 @@
 import { Container } from '@/containers/hoc/container/container'
 import classes from './principles.module.scss'
 import { PrincipleItem } from './principle-item/principle-item.component'
-import { PrincipleItemData } from '@/entity/PrincipleItemData/principle-item-data'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { getPrinciplesData } from '@/redux/selectors'
 
-interface PropsType {
-	principlesData: PrincipleItemData[]
-}
-
-export const Principles = ({ principlesData }: PropsType) => {
+export const Principles = () => {
 	const { t } = useTranslation()
+	const principlesData = useSelector(getPrinciplesData)
 
 	return (
 		<section className={classes.principles}>

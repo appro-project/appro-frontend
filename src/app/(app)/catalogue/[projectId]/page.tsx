@@ -1,59 +1,35 @@
-'use client'
-import { Container } from '@/containers/hoc/container/container'
-import { useEffect } from 'react'
-import { useParams } from 'next/navigation'
-import { ProjectTabs } from '@/features/project/project-tabs.component'
-
-import { useGetProjectById } from '@/api/use-get-project-by-id'
-import { setViewProject } from '@/redux/actions'
 import {
-	getProjectInLocalStorage,
-	setProjectInLocalStorage
-} from '@/services/util/localStorage'
-import { useDispatch } from 'react-redux'
-import classes from '@/features/project/project.module.scss'
-import { Breadcrumbs } from '@/components/ui/breadcrumbs/breadcrumbs'
-import { useTranslation } from 'react-i18next'
-import { FullSizeLoader } from '@/components/full-size-loader.component'
+  dehydrate,
+  HydrationBoundary,
+} from "@tanstack/react-query";
+import {
+  fetchProjectById,
+  projectByIdQueryKey,
+} from "@/api/project-by-id-query";
+import ProjectPageContent from "../../../../features/catalogue/project-page-content";
+import { createQueryClient } from "@/utils/react-query/react-query-util";
 
+type Props = {
+  params: Promise<{ projectId: string }>;
+};
 
-export default function ProjectPage() {
-	const { projectId } = useParams() as { projectId: string };
-	const { data: project } = useGetProjectById(+projectId)
-	const dispatch = useDispatch()
-	const { t } = useTranslation()
+export default async function ProjectPage({ params }: Props) {
+  const { projectId } = await params;
+  const id = Number(projectId);
+  if (Number.isNaN(id)) {
+    return null; // or redirect to 404
+  }
 
-	useEffect(() => {
-		const projectInLocalStorage: number[] = getProjectInLocalStorage()
-		if (project) {
-			const filterProjectInLocalStorage = projectInLocalStorage?.filter(
-				elem => elem !== project?.id
-			)
-			setProjectInLocalStorage([project?.id, ...filterProjectInLocalStorage])
-			dispatch(setViewProject(project))
-		}
-	}, [project])
+  const queryClient = createQueryClient();
 
-	if (!project) {
-		return <FullSizeLoader />
-	}
+  await queryClient.prefetchQuery({
+    queryKey: projectByIdQueryKey(id),
+    queryFn: () => fetchProjectById(id),
+  });
 
-	return (
-		<section className={classes.Project}>
-			<Container>
-				<div className={classes.Project_Breadcrumbs}>
-					<Breadcrumbs
-						items={[
-							{ href: '/catalogue', label: t('header.catalogue_link') },
-							{ href: `/catalogue/${project.id}`, label: project.title }
-						]}
-					/>
-				</div>
-				<h1 className={classes.Project_Title}>{project.title}</h1>
-				<div className={classes.Project_Body}>
-					{project && <ProjectTabs project={project} />}
-				</div>
-			</Container>
-		</section>
-	)
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <ProjectPageContent />
+    </HydrationBoundary>
+  );
 }
