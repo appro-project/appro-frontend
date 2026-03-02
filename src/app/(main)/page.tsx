@@ -8,15 +8,19 @@ import { HomeContent } from '@/features/main-page/home-content'
 import { createQueryClient } from '@/utils/react-query/react-query-util'
 import { getServerTranslations, getPrinciplesTranslations, getAppTranslations } from '@/i18n/server'
 import { DEFAULT_LOCALE } from '@/i18n/locales'
+import { getAlternates, getBaseOpenGraph } from '@/utils/seo/alternates'
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getServerTranslations(DEFAULT_LOCALE)
   return {
     title: t('meta.site_title'),
     description: t('meta.site_description'),
+    alternates: getAlternates('/'),
     openGraph: {
+      ...getBaseOpenGraph(DEFAULT_LOCALE),
       title: t('meta.site_title'),
       description: t('meta.site_description'),
+      type: 'website',
     },
   }
 }
