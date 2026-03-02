@@ -12,6 +12,7 @@ import { getAppTranslations } from "@/i18n/server";
 import { DEFAULT_LOCALE } from "@/i18n/locales";
 import type { Metadata } from 'next'
 import { generateProjectMetadata } from '@/utils/seo/generate-project-metadata'
+import { ProductJsonLd, BreadcrumbJsonLd } from '@/components/seo/json-ld'
 
 type Props = {
   params: Promise<{ projectId: string }>;
@@ -39,16 +40,31 @@ export default async function ProjectPage({ params }: Props) {
 
   const queryClient = createQueryClient();
 
-  await queryClient.prefetchQuery({
+  const project = await queryClient.fetchQuery({
     queryKey: projectByIdQueryKey(id),
     queryFn: () => fetchProjectById(id),
   });
 
   const translations = getAppTranslations(lang);
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://appro.com.ua'
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <ProjectPageContent translations={translations} lang={lang} />
-    </HydrationBoundary>
+    <>
+      {project && (
+        <>
+          <ProductJsonLd project={project} locale={lang} />
+          <BreadcrumbJsonLd
+            items={[
+              { name: 'Головна', url: baseUrl },
+              { name: 'Каталог будинків', url: `${baseUrl}/catalogue` },
+              { name: project.title, url: `${baseUrl}/catalogue/${project.id}` },
+            ]}
+          />
+        </>
+      )}
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <ProjectPageContent translations={translations} lang={lang} />
+      </HydrationBoundary>
+    </>
   );
 }

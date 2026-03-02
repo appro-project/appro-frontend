@@ -9,6 +9,7 @@ import { createQueryClient } from '@/utils/react-query/react-query-util'
 import { getServerTranslations, getPrinciplesTranslations, getAppTranslations } from '@/i18n/server'
 import { DEFAULT_LOCALE } from '@/i18n/locales'
 import { getAlternates, getBaseOpenGraph } from '@/utils/seo/alternates'
+import { LocalBusinessJsonLd } from '@/components/seo/json-ld'
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getServerTranslations(DEFAULT_LOCALE)
@@ -37,8 +38,11 @@ export default async function HomePage() {
   ])
   const translations = getAppTranslations(lang)
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <HomeContent principlesTranslations={principlesTranslations} translations={translations} lang={lang} />
-    </HydrationBoundary>
+    <>
+      <LocalBusinessJsonLd />
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <HomeContent principlesTranslations={principlesTranslations} translations={translations} lang={lang} />
+      </HydrationBoundary>
+    </>
   )
 }
