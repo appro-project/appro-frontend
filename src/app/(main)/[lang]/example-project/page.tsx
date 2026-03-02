@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { ExampleProject } from '@/features/example-project/example-project.component'
-import { getServerTranslations } from '@/i18n/server'
+import { getAppTranslations, getServerTranslations } from '@/i18n/server'
 import { DEFAULT_LOCALE } from '@/i18n/locales'
 import { getAlternates, getBaseOpenGraph } from '@/utils/seo/alternates'
 
@@ -25,6 +25,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function LangExampleProjectPage() {
-  return <ExampleProject />
+export default async function LangExampleProjectPage({ params }: Props) {
+  const { lang: langParam } = await params
+  const lang = langParam === 'ru' ? 'ru' : DEFAULT_LOCALE
+  const translations = getAppTranslations(lang)
+  return <ExampleProject translations={translations} lang={lang} />
 }

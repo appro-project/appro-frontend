@@ -1,10 +1,15 @@
 import { memo } from 'react'
-import { useT } from '@/contexts/translations-context'
+import { createT, type TranslationsRecord } from '@/i18n/create-t'
 import planImage from '@/assets/img/individual-project/plan.jpg'
 import classes from './differences.module.scss'
 
-export const Differences = memo(function Differences() {
-	const t = useT()
+type Props = {
+	translations: TranslationsRecord
+	lang: string
+}
+
+export const Differences = memo(function Differences({ translations }: Props) {
+	const t = createT(translations)
 
 	return (
 		<div className={classes['differences']}>

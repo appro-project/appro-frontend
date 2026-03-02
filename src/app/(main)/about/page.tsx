@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { AboutUs } from '@/features/about-us-page/about-us.component'
-import { getServerTranslations } from '@/i18n/server'
+import { getAppTranslations, getServerTranslations } from '@/i18n/server'
 import { DEFAULT_LOCALE } from '@/i18n/locales'
 import { getAlternates, getBaseOpenGraph } from '@/utils/seo/alternates'
 
@@ -20,5 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function AboutUsPage() {
-  return <AboutUs />
+  const lang = DEFAULT_LOCALE
+  const translations = getAppTranslations(lang)
+  return <AboutUs translations={translations} lang={lang} />
 }

@@ -14,6 +14,10 @@ import { CustomSnackbar } from '@/components/custom-snackbar.component'
 import { AlertDialog } from '@/components/admin/dialog.component'
 import { useDeleteProject } from '@/api/use-delete-project'
 import { FullSizeLoader } from '@/components/full-size-loader.component'
+import { getAppTranslations } from '@/i18n/server'
+import { DEFAULT_LOCALE } from '@/i18n/locales'
+
+const translations = getAppTranslations(DEFAULT_LOCALE)
 
 interface ProjectInfoProps {
 	projectId?: string
@@ -200,6 +204,7 @@ export const ProjectInfo: FC<ProjectInfoProps> = ({ projectId, isNew }) => {
 						projectDto={currentProject}
 						dispatch={localDispatch}
 						mode={'edit'}
+						translations={translations}
 					/>
 				</CustomTabPanel>
 				<CustomTabPanel index={1} tabIndex={tabIndex}>
@@ -207,6 +212,7 @@ export const ProjectInfo: FC<ProjectInfoProps> = ({ projectId, isNew }) => {
 						projectDto={currentProject}
 						dispatch={localDispatch}
 						mode={'edit'}
+						translations={translations}
 					/>
 				</CustomTabPanel>
 				<CustomTabPanel index={2} tabIndex={tabIndex}>
@@ -214,6 +220,7 @@ export const ProjectInfo: FC<ProjectInfoProps> = ({ projectId, isNew }) => {
 						projectDto={currentProject}
 						dispatch={localDispatch}
 						mode={'edit'}
+						translations={translations}
 					/>
 				</CustomTabPanel>
 				<CustomTabPanel index={3} tabIndex={tabIndex}>
@@ -221,6 +228,7 @@ export const ProjectInfo: FC<ProjectInfoProps> = ({ projectId, isNew }) => {
 						projectDto={currentProject}
 						dispatch={localDispatch}
 						mode={'edit'}
+						translations={translations}
 					/>
 				</CustomTabPanel>
 			</Box>

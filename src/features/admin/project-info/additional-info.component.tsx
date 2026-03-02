@@ -17,7 +17,8 @@ import TextProperty from '@/features/admin/view-add-edit-project/text-property'
 export const AdditionalInfo: FC<ProjectProps> = ({
 	projectDto,
 	dispatch,
-	mode
+	mode,
+	translations
 }) => {
 	const view = mode === 'view';
 	return (
@@ -63,6 +64,7 @@ export const AdditionalInfo: FC<ProjectProps> = ({
 					options={foundationOptions}
 					required={true}
 					disabled={view}
+					translations={translations}
 					handleProperty={e =>
 						dispatch({ type: 'foundation', payload: e.target.value })
 					}
@@ -76,6 +78,7 @@ export const AdditionalInfo: FC<ProjectProps> = ({
 					options={ceilingOptions}
 					required={true}
 					disabled={view}
+					translations={translations}
 					handleProperty={e =>
 						dispatch({ type: 'ceiling', payload: e.target.value })
 					}
@@ -89,6 +92,7 @@ export const AdditionalInfo: FC<ProjectProps> = ({
 					options={roofOptions}
 					required={true}
 					disabled={view}
+					translations={translations}
 					handleProperty={e =>
 						dispatch({ type: 'roof', payload: e.target.value })
 					}
@@ -113,6 +117,7 @@ export const AdditionalInfo: FC<ProjectProps> = ({
 					options={wallMaterialOptions}
 					required={true}
 					disabled={view}
+					translations={translations}
 					handleProperty={e =>
 						dispatch({ type: 'wallMaterial', payload: e.target.value })
 					}
@@ -137,6 +142,7 @@ export const AdditionalInfo: FC<ProjectProps> = ({
 					options={insulationOptions}
 					required={true}
 					disabled={view}
+					translations={translations}
 					handleProperty={e =>
 						dispatch({ type: 'insulation', payload: e.target.value })
 					}

@@ -6,20 +6,16 @@ import { InfoCard } from '@/features/project/general-info/info-card.component'
 import { ProjectDto } from '@/api/model'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
-import type { TranslationsRecord } from '@/i18n/create-t'
+import { createT, type TranslationsRecord } from '@/i18n/create-t'
 import { localePath, type Locale } from '@/i18n/locales'
-import { useT } from '@/contexts/translations-context'
 
 interface Props {
 	project: ProjectDto
 	translations: TranslationsRecord
 	lang: Locale
 }
-export const ProjectStructure = ({ project, translations }: Props) => {
-	const t = useT()
-	const params = useParams()
-	const lang = (params?.lang as Locale) ?? 'ua'
+export const ProjectStructure = ({ project, translations, lang }: Props) => {
+	const t = createT(translations)
 
 	return (
 		<section className='project-section project-structure'>

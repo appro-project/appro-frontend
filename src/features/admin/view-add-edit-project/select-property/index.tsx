@@ -1,8 +1,7 @@
 import React from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import { TextField } from '@mui/material'
-import { useT } from '@/contexts/translations-context'
-import { TFunction } from 'i18next'
+import { createT, type TranslationsRecord } from '@/i18n/create-t'
 
 interface Props {
 	title: string
@@ -11,6 +10,7 @@ interface Props {
 	options: ReadonlyArray<string>
 	required?: boolean
 	disabled?: boolean
+	translations: TranslationsRecord
 
 	handleProperty(event: React.ChangeEvent<HTMLInputElement>): void
 }
@@ -18,7 +18,7 @@ interface Props {
 const getSelectOptions = (
 	options: ReadonlyArray<string>,
 	label: string,
-	t: TFunction
+	t: (key: string) => string
 ) => {
 	const renderOptions = [] as React.ReactElement[]
 	options.forEach((option: string | number, idx: number) =>
@@ -39,9 +39,10 @@ const SelectProperty = ({
 	disabled,
 	options,
 	label,
+	translations,
 	handleProperty
 }: Props) => {
-	const t = useT()
+	const t = createT(translations)
 
 	return (
 		<TextField

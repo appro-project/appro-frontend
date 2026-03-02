@@ -17,7 +17,7 @@ type AppShellProps = {
 
 export default function AppShell({ children, translations, lang }: AppShellProps) {
   return (
-    <ProvidersWrapper locale={lang}>
+    <ProvidersWrapper>
       <Wrapper>
         <Header translations={translations} lang={lang} />
         <main className={classes.content}>{children}</main>

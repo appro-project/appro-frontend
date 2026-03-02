@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { AboutUs } from '@/features/about-us-page/about-us.component'
-import { getServerTranslations } from '@/i18n/server'
+import { getAppTranslations, getServerTranslations } from '@/i18n/server'
 import { DEFAULT_LOCALE } from '@/i18n/locales'
 import { getAlternates, getBaseOpenGraph } from '@/utils/seo/alternates'
 
@@ -25,6 +25,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function LangAboutUsPage() {
-  return <AboutUs />
+export default async function LangAboutUsPage({ params }: Props) {
+  const { lang: langParam } = await params
+  const lang = langParam === 'ru' ? 'ru' : DEFAULT_LOCALE
+  const translations = getAppTranslations(lang)
+  return <AboutUs translations={translations} lang={lang} />
 }
