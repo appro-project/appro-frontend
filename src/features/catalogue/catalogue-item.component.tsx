@@ -1,5 +1,7 @@
 import { FC, memo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
+import type { Locale } from '@/i18n/locales'
 import classes from './catalogue.module.scss'
 import { Container } from '@/containers/hoc/container/container'
 import { Breadcrumbs } from '@/components/ui/breadcrumbs/breadcrumbs'
@@ -22,6 +24,8 @@ interface PropsType {
 	currentPage: number
 	projectsPerPage: number
 	handlePageChange: (nextPage: number) => void
+	translations: TranslationsRecord
+	lang: Locale
 }
 
 const CatalogueItem: FC<PropsType> = memo(
@@ -33,11 +37,13 @@ const CatalogueItem: FC<PropsType> = memo(
 		currentProjectsPaged,
 		currentPage,
 		projectsPerPage,
-		handlePageChange
+		handlePageChange,
+		translations,
+		lang
 	}) {
 		const [openFilter, setOpenFilter] = useState(false)
 
-		const { t } = useTranslation()
+		const t = createT(translations)
 
 		return (
 			<div className={classes.Catalogue}>
@@ -47,6 +53,8 @@ const CatalogueItem: FC<PropsType> = memo(
 							items={[
 								{ href: '/catalogue', label: t('header.catalogue_link') }
 							]}
+							translations={translations}
+							lang={lang}
 						/>
 					</div>
 					<div>
@@ -67,11 +75,13 @@ const CatalogueItem: FC<PropsType> = memo(
 									<FilterList
 										applyFilter={applyFilter}
 										closeDrawer={() => setOpenFilter(false)}
+										translations={translations}
+										lang={lang}
 									/>
 								)}
 							</Drawer>
 							<Box sx={{ display: { xs: 'none', lg: 'block' } }}>
-								<FilterList applyFilter={applyFilter} />
+								<FilterList applyFilter={applyFilter} translations={translations} lang={lang} />
 							</Box>
 						</div>
 						<div>
@@ -79,6 +89,8 @@ const CatalogueItem: FC<PropsType> = memo(
 								count={currentProjects.length}
 								sortDetails={sortDetails}
 								applySort={applySort}
+								translations={translations}
+								lang={lang}
 							/>
 							<ProjectList projects={currentProjectsPaged} />
 							<Pagination
@@ -90,7 +102,7 @@ const CatalogueItem: FC<PropsType> = memo(
 						</div>
 					</div>
 
-					<VisitedProjects />
+					<VisitedProjects translations={translations} lang={lang} />
 				</Container>
 			</div>
 		)

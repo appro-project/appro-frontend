@@ -1,17 +1,21 @@
 'use client'
 import { Container } from '@/containers/hoc/container/container'
-
-import { useTranslation } from 'react-i18next'
-
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
 import Logo from '@/assets/img/logo.svg'
-import { contactInfo, MenuLinkInfo, menuLinks } from '@/constants'
-
+import { contactInfo, menuLinks } from '@/constants'
 import classes from './footer.module.scss'
 import Image from 'next/image'
 import Link from 'next/link'
+import { localePath, type Locale } from '@/i18n/locales'
 
-export const Footer = () => {
-	const { t } = useTranslation()
+type FooterProps = {
+	translations: TranslationsRecord
+	lang: Locale
+}
+
+export const Footer = ({ translations, lang }: FooterProps) => {
+	const t = createT(translations)
 	return (
 		<footer className={classes.footer}>
 			<Container>
@@ -26,7 +30,7 @@ export const Footer = () => {
 					<nav className={classes.footer__nav}>
 						<ul className={classes['footer__menu-list']}>
 							{menuLinks.map((link, index) => (
-								<MenuItem key={index} name={t(link.name)} path={link.path} />
+								<MenuItem key={index} name={t(link.name)} href={localePath(link.path, lang)} />
 							))}
 						</ul>
 					</nav>
@@ -47,13 +51,10 @@ export const Footer = () => {
 	)
 }
 
-// TODO: How can we pass object here?
-const MenuItem = (props: MenuLinkInfo) => {
-	return (
-		<li>
-			<Link href={props.path} className={classes['footer__menu-link']}>
-				{props.name}
-			</Link>
-		</li>
-	)
-}
+const MenuItem = ({ name, href }: { name: string; href: string }) => (
+	<li>
+		<Link href={href} className={classes['footer__menu-link']}>
+			{name}
+		</Link>
+	</li>
+)

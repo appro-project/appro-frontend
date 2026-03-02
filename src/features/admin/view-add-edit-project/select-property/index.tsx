@@ -1,7 +1,7 @@
 import React from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import { TextField } from '@mui/material'
-import { useTranslation } from 'react-i18next'
+import { useT } from '@/contexts/translations-context'
 import { TFunction } from 'i18next'
 
 interface Props {
@@ -41,7 +41,7 @@ const SelectProperty = ({
 	label,
 	handleProperty
 }: Props) => {
-	const { t } = useTranslation()
+	const t = useT()
 
 	return (
 		<TextField

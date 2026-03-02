@@ -6,18 +6,18 @@ import {
   fetchProjectById,
   projectByIdQueryKey,
 } from "@/api/project-by-id-query";
-import ProjectPageContent from "../../../../features/catalogue/project-page-content";
+import ProjectPageContent from "@/features/catalogue/project-page-content";
 import { createQueryClient } from "@/utils/react-query/react-query-util";
 
 type Props = {
-  params: Promise<{ projectId: string }>;
+  params: Promise<{ lang: string; projectId: string }>;
 };
 
-export default async function ProjectPage({ params }: Props) {
+export default async function LangProjectPage({ params }: Props) {
   const { projectId } = await params;
   const id = Number(projectId);
   if (Number.isNaN(id)) {
-    return null; // or redirect to 404
+    return null;
   }
 
   const queryClient = createQueryClient();

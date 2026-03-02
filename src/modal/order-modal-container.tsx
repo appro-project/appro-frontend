@@ -2,13 +2,19 @@ import { FC, useEffect } from 'react'
 import OrderModal from './order-modal.component'
 import './modal.scss'
 import { useModalStore } from './order-modal-container.store'
+import type { TranslationsRecord } from '@/i18n/create-t'
+import type { Locale } from '@/i18n/locales'
 
 interface OrderModalContainerProps {
 	onFormSubmit: () => void
+	translations: TranslationsRecord
+	lang: Locale
 }
 
 export const OrderModalContainer: FC<OrderModalContainerProps> = ({
-	onFormSubmit
+	onFormSubmit,
+	translations,
+	lang
 }) => {
 	const { isOpen, project, title, closeModal } = useModalStore()
 
@@ -33,6 +39,8 @@ export const OrderModalContainer: FC<OrderModalContainerProps> = ({
 				project={project || ''}
 				onClose={closeModal}
 				onFormSubmit={onFormSubmit}
+				translations={translations}
+				lang={lang}
 			/>
 		</div>
 	)

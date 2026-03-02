@@ -1,5 +1,6 @@
+'use client'
 import { memo } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useT } from '@/contexts/translations-context'
 import { useState } from 'react'
 
 import classes from './order.module.scss'
@@ -7,7 +8,7 @@ import { ContactForm } from './contact-form/contact-form.component'
 import SuccessPopup from '@/components/success-popup/success-popup.component'
 
 export const Order = memo(function Order() {
-	const { t } = useTranslation()
+	const t = useT()
 	const [successMessageVisible, setSuccessMessageVisible] = useState(false)
 	const showSuccessMessage = () => {
 		setSuccessMessageVisible(true)

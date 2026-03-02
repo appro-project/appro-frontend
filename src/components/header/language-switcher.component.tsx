@@ -1,31 +1,34 @@
 import MenuItem from '@mui/material/MenuItem'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
-import { FC, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { FC } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import { localePath, pathWithoutLang, type Locale } from '@/i18n/locales'
 
-const languages = {
+const languages: Record<Locale, string> = {
 	ru: 'RU',
 	ua: 'UA'
 }
 
 interface LanguageSwitcherProps {
 	style?: string
+	lang: Locale
 }
 
-export const LanguageSwitcher: FC<LanguageSwitcherProps> = ({ style }) => {
-	const { i18n } = useTranslation()
-	const [lng, setLng] = useState(i18n.language)
+export const LanguageSwitcher: FC<LanguageSwitcherProps> = ({ style, lang }) => {
+	const pathname = usePathname()
+	const router = useRouter()
 
 	const changeLanguage = (event: SelectChangeEvent<string>) => {
-		const lng = event.target.value as keyof typeof languages
-		i18n.changeLanguage(lng)
-		setLng(lng)
+		const newLocale = event.target.value as Locale
+		const path = pathWithoutLang(pathname)
+		router.push(localePath(path, newLocale))
 	}
+
 	return (
 		<Select
 			labelId='language-select-label'
 			id='language-select'
-			value={lng}
+			value={lang}
 			onChange={changeLanguage}
 			IconComponent={() => null}
 			sx={{
@@ -37,9 +40,9 @@ export const LanguageSwitcher: FC<LanguageSwitcherProps> = ({ style }) => {
 			}}
 			classes={{ root: style }}
 		>
-			{Object.keys(languages).map(lng => (
+			{(Object.keys(languages) as Locale[]).map((lng) => (
 				<MenuItem key={lng} value={lng}>
-					{languages[lng as keyof typeof languages]}
+					{languages[lng]}
 				</MenuItem>
 			))}
 		</Select>

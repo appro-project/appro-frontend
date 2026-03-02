@@ -1,4 +1,6 @@
-import { useTranslation } from 'react-i18next'
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
+import type { Locale } from '@/i18n/locales'
 import classes from './individual-project.module.scss'
 import { Container } from '@/containers/hoc/container/container'
 import { Differences } from './differences/differences.component'
@@ -7,14 +9,19 @@ import { Order } from './order/order.component'
 import { VisitedProjects } from '@/containers/visited-projects/visited-projects'
 import { Breadcrumbs } from '@/components/ui/breadcrumbs/breadcrumbs'
 
-export const IndividualProject = () => {
-	const { t } = useTranslation();
+type IndividualProjectProps = {
+	translations: TranslationsRecord
+	lang: Locale
+}
+
+export const IndividualProject = ({ translations, lang }: IndividualProjectProps) => {
+	const t = createT(translations);
 
 	return (
 		<div className={classes.IndividualProject}>
 			<Container>
 				<div className={classes.IndividualProject_Breadcrumbs}>
-					<Breadcrumbs items={[{ href: '/individual-project', label: t('header.individual_project_link') }]} />
+					<Breadcrumbs items={[{ href: '/individual-project', label: t('header.individual_project_link') }]} translations={translations} lang={lang} />
 				</div>
 				<div className={classes['individual-project__header']}>
 					{t('individual.title')}
@@ -24,7 +31,7 @@ export const IndividualProject = () => {
 				</p>
 
 				<div className={classes['individual-project__differences-wrapper']}>
-					<Differences />
+					<Differences translations={translations} lang={lang} />
 				</div>
 
 				<p className={classes['individual-project__description']}>
@@ -38,18 +45,18 @@ export const IndividualProject = () => {
 				</p>
 
 				<div className={classes['individual-project__steps-wrapper']}>
-					<Steps />
+					<Steps translations={translations} lang={lang} />
 				</div>
 
 				<div className={classes['individual-project__order-wrapper']}>
-					<Order />
+					<Order translations={translations} lang={lang} />
 				</div>
 			</Container>
             
 			{/* Kind of page Footer, should be out of container */}
 			<div className={classes['individual-project__visited-wrapper']}>
 				<Container>
-					<VisitedProjects />
+					<VisitedProjects translations={translations} lang={lang} />
 				</Container>
 			</div>
 		</div>

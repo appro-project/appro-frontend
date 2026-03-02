@@ -1,10 +1,10 @@
 import { memo } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useT } from '@/contexts/translations-context'
 import planImage from '@/assets/img/individual-project/plan.jpg'
 import classes from './differences.module.scss'
 
 export const Differences = memo(function Differences() {
-	const { t } = useTranslation()
+	const t = useT()
 
 	return (
 		<div className={classes['differences']}>

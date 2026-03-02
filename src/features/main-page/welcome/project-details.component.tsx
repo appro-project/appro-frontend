@@ -3,15 +3,19 @@ import classes from "./project-details.module.scss";
 import Link from "next/link";
 import { ProjectDto } from "@/api/model";
 import { FC } from "react";
-import { useTranslation } from "react-i18next";
+import { createT } from "@/i18n/create-t";
+import type { TranslationsRecord } from "@/i18n/create-t";
 import { getDescription } from "@/utils/project-util";
+import { localePath, type Locale } from "@/i18n/locales";
 
 interface Props {
   project: ProjectDto;
+  translations: TranslationsRecord;
+  lang: Locale;
 }
 
-export const ProjectDetails: FC<Props> = ({ project }) => {
-  const { t } = useTranslation();
+export const ProjectDetails: FC<Props> = ({ project, translations, lang }) => {
+  const t = createT(translations);
 
   return (
     <div className={classes["project-details"]}>
@@ -26,7 +30,7 @@ export const ProjectDetails: FC<Props> = ({ project }) => {
         </div>
       </div>
       <div className={classes["project-details__description"]}>
-        {getDescription(project)}
+        {getDescription(project, lang)}
       </div>
 
       <div className={classes["project-details__footer"]}>
@@ -37,7 +41,7 @@ export const ProjectDetails: FC<Props> = ({ project }) => {
           </span>
         </div>
         <Link
-          href={`/catalogue/${project.id}`}
+          href={localePath(`/catalogue/${project.id}`, lang)}
           className={classes["project-details__link"]}
         >
           <Button title={t("catalogue.project.more_details")} />

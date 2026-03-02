@@ -13,14 +13,21 @@ import {
 import { useDispatch } from "react-redux";
 import classes from "@/features/project/project.module.scss";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs/breadcrumbs";
-import { useTranslation } from "react-i18next";
+import { createT } from "@/i18n/create-t";
+import type { TranslationsRecord } from "@/i18n/create-t";
+import type { Locale } from "@/i18n/locales";
 import { FullSizeLoader } from "@/components/full-size-loader.component";
 
-export default function ProjectPageContent() {
+type ProjectPageContentProps = {
+  translations: TranslationsRecord;
+  lang: Locale;
+};
+
+export default function ProjectPageContent({ translations, lang }: ProjectPageContentProps) {
   const { projectId } = useParams() as { projectId: string };
   const { data: project } = useGetProjectById(+projectId);
   const dispatch = useDispatch();
-  const { t } = useTranslation();
+  const t = createT(translations);
 
   useEffect(() => {
     const projectInLocalStorage: number[] = getProjectInLocalStorage();
@@ -46,11 +53,13 @@ export default function ProjectPageContent() {
               { href: "/catalogue", label: t("header.catalogue_link") },
               { href: `/catalogue/${project.id}`, label: project.title },
             ]}
+            translations={translations}
+            lang={lang}
           />
         </div>
         <h1 className={classes.Project_Title}>{project.title}</h1>
         <div className={classes.Project_Body}>
-          {project && <ProjectTabs project={project} />}
+          {project && <ProjectTabs project={project} translations={translations} lang={lang} />}
         </div>
       </Container>
     </section>

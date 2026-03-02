@@ -1,9 +1,16 @@
 import React from 'react'
 import classes from './success-popup.module.scss'
-import { useTranslation } from 'react-i18next'
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
+import type { Locale } from '@/i18n/locales'
 
-const SuccessPopup = () => {
-	const { t } = useTranslation()
+type SuccessPopupProps = {
+	translations: TranslationsRecord
+	lang: Locale
+}
+
+const SuccessPopup = ({ translations, lang }: SuccessPopupProps) => {
+	const t = createT(translations)
 
 	return (
 		<div className={classes.popup}>

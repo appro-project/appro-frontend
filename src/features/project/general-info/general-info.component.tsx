@@ -2,14 +2,17 @@ import classes from './general-info.module.scss'
 import { ImageCarousel } from '@/features/project/image-carousel/image-carousel.component'
 import { InfoCard, InfoCardProps } from '@/features/project/general-info/info-card.component'
 import { FC } from 'react'
-
-import { useTranslation } from 'react-i18next'
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
+import type { Locale } from '@/i18n/locales'
 
 interface GeneralInfoProps extends InfoCardProps {
 	mainImage?: string
 	images: string[]
 	videoUrl?: string
 	description?: string
+	translations: TranslationsRecord
+	lang: Locale
 }
 
 export const GeneralInfo: FC<GeneralInfoProps> = ({
@@ -20,9 +23,11 @@ export const GeneralInfo: FC<GeneralInfoProps> = ({
 	title,
 	generalArea,
 	timeToCreate,
-	projectPrice
+	projectPrice,
+	translations,
+	lang
 }) => {
-	const { t } = useTranslation()
+	const t = createT(translations)
 
 	return (
 		<section>
@@ -39,6 +44,8 @@ export const GeneralInfo: FC<GeneralInfoProps> = ({
 					generalArea={generalArea}
 					timeToCreate={timeToCreate}
 					projectPrice={projectPrice}
+					translations={translations}
+					lang={lang}
 				/>
 			</div>
 			{description && (

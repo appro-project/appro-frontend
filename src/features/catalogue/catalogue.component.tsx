@@ -11,10 +11,17 @@ import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import { useGetAllProjects } from '@/api/use-get-all-projects'
 import { ProjectDto } from '@/api/model'
 import { FullSizeLoader } from '@/components/full-size-loader.component'
+import type { TranslationsRecord } from '@/i18n/create-t'
+import type { Locale } from '@/i18n/locales'
 
 const projectsPerPage = 8
 
-export const Catalogue = () => {
+type CatalogueProps = {
+	translations: TranslationsRecord
+	lang: Locale
+}
+
+export const Catalogue = ({ translations, lang }: CatalogueProps) => {
 	const searchParams = useSearchParams()
 	const router = useRouter()
 	const pathname = usePathname()
@@ -122,6 +129,8 @@ export const Catalogue = () => {
 			currentPage={state.currentPage}
 			projectsPerPage={projectsPerPage}
 			handlePageChange={handlePageChange}
+			translations={translations}
+			lang={lang}
 		/>
 	)
 }

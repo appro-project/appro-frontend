@@ -2,12 +2,19 @@ import classes from './visited-projects.module.scss'
 import { ProjectDetails } from '@/containers/project-details/project-details'
 import { useGetAllProjects } from '@/api/use-get-all-projects'
 import { ProjectDto } from '@/api/model'
-import { useTranslation } from 'react-i18next'
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
+import type { Locale } from '@/i18n/locales'
 import { FullSizeLoader } from '@/components/full-size-loader.component'
 
-export const VisitedProjects = () => {
+type VisitedProjectsProps = {
+	translations: TranslationsRecord
+	lang: Locale
+}
+
+export const VisitedProjects = ({ translations, lang }: VisitedProjectsProps) => {
 	const { data: projects } = useGetAllProjects()
-	const { t } = useTranslation()
+	const t = createT(translations)
 
 	if (!projects) return <FullSizeLoader />
 
@@ -27,7 +34,7 @@ export const VisitedProjects = () => {
 									className={classes.VisitedProjects_ProjectWrapper}
 									key={idx}
 								>
-									<ProjectDetails projectData={project} />
+									<ProjectDetails projectData={project} translations={translations} lang={lang} />
 								</div>
 							))}
 					</div>

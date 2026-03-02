@@ -1,5 +1,5 @@
 'use client'
-import { useTranslation } from 'react-i18next'
+import { useT } from '@/contexts/translations-context'
 import Image from 'next/image'
 
 import { Container } from '@/containers/hoc/container/container'
@@ -11,7 +11,7 @@ import './about-us.scss'
 import '@/features/project/project-structure/project-structure.scss'
 
 export const AboutUs = () => {
-	const { t } = useTranslation()
+	const t = useT()
 
 	return (
 		<div>

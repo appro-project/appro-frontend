@@ -1,12 +1,12 @@
 import { memo } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useT } from '@/contexts/translations-context'
 
 import classes from './steps.module.scss'
 import { StepInfo, steps } from '@/constants/steps'
 import { TFunction } from 'i18next'
 
 export const Steps = memo(function Steps() {
-	const { t } = useTranslation()
+	const t = useT()
 	return (
 		<div className={classes['steps']}>
 			<h3 className={classes['steps__title']}>{t('individual.steps.title')}</h3>

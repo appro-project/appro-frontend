@@ -1,12 +1,12 @@
 import { Container } from '@/containers/hoc/container/container'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useT } from '@/contexts/translations-context'
 import classes from './example-project.module.scss'
 import ImageCarousel from './image-carousel/image-carousel.component'
 import { plan1, plan2, plan3, plan4 } from './import-images'
 
 export const ExampleProject = () => {
-	const { t } = useTranslation();
+	const t = useT();
 
 	return (
 		<div className={classes.exampleProject}>
