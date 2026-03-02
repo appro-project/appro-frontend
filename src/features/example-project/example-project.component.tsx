@@ -1,3 +1,4 @@
+'use client'
 import { Container } from '@/containers/hoc/container/container'
 import React from 'react'
 import { useT } from '@/contexts/translations-context'

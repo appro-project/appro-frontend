@@ -1,3 +1,4 @@
+'use client'
 import classes from './visited-projects.module.scss'
 import { ProjectDetails } from '@/containers/project-details/project-details'
 import { useGetAllProjects } from '@/api/use-get-all-projects'

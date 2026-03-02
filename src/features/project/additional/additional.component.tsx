@@ -1,3 +1,4 @@
+'use client'
 import { createT } from '@/i18n/create-t'
 import type { TranslationsRecord } from '@/i18n/create-t'
 import type { Locale } from '@/i18n/locales'
