@@ -1,7 +1,6 @@
 'use client'
 import { createT } from '@/i18n/create-t'
 import type { TranslationsRecord } from '@/i18n/create-t'
-import type { Locale } from '@/i18n/locales'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
@@ -16,10 +15,9 @@ import paint from '@/assets/img/project-page/paint.svg'
 
 type AdditionalProps = {
 	translations: TranslationsRecord
-	lang: Locale
 }
 
-export const Additional = ({ translations, lang }: AdditionalProps) => {
+export const Additional = ({ translations }: AdditionalProps) => {
 	const t = createT(translations)
 
 	const { openModal } = useModalStore()

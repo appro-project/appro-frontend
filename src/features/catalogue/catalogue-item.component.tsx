@@ -92,7 +92,7 @@ const CatalogueItem: FC<PropsType> = memo(
 								translations={translations}
 								lang={lang}
 							/>
-							<ProjectList projects={currentProjectsPaged} />
+							<ProjectList projects={currentProjectsPaged} translations={translations} lang={lang}/>
 							<Pagination
 								itemsLength={currentProjects.length}
 								currentPage={currentPage}

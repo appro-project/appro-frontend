@@ -8,6 +8,8 @@ import ClientWrapper from '@/modal/client-wrapper'
 import ProvidersWrapper from '@/containers/providers-wrapper'
 import type { TranslationsRecord } from '@/i18n/create-t'
 import type { Locale } from '@/i18n/locales'
+import { usePathname } from 'next/navigation'
+import { useState, useEffect } from 'react'
 
 type AppShellProps = {
   children: React.ReactNode
@@ -16,13 +18,24 @@ type AppShellProps = {
 }
 
 export default function AppShell({ children, translations, lang }: AppShellProps) {
+  const [currentLang, setCurrentLang] = useState(lang)
+	// const pathname = usePathname()
+	// useEffect(() => {
+	// 	const newLang = pathname.startsWith('/ru') ? 'ru' : 'ua'
+	// 	setCurrentLang(newLang)
+	// }, [pathname])
+
+  useEffect(() => {
+    setCurrentLang(lang)
+  }, [lang])
+
   return (
     <ProvidersWrapper>
       <Wrapper>
-        <Header translations={translations} lang={lang} />
+        <Header translations={translations} lang={currentLang} />
         <main className={classes.content}>{children}</main>
-        <Footer translations={translations} lang={lang} />
-        <ClientWrapper translations={translations} lang={lang} />
+        <Footer translations={translations} lang={currentLang} />
+        <ClientWrapper translations={translations} lang={currentLang} />
       </Wrapper>
     </ProvidersWrapper>
   )

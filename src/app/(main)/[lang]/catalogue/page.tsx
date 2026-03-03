@@ -8,7 +8,7 @@ import { Suspense } from "react";
 import { FullSizeLoader } from "@/components/full-size-loader.component";
 import { createQueryClient } from "@/utils/react-query/react-query-util";
 import type { Metadata } from 'next'
-import { getServerTranslations } from '@/i18n/server'
+import { getAppTranslations, getServerTranslations } from '@/i18n/server'
 import { DEFAULT_LOCALE } from '@/i18n/locales'
 import { getAlternates, getBaseOpenGraph } from '@/utils/seo/alternates'
 
@@ -33,7 +33,9 @@ export async function generateMetadata({ params }: MetadataProps): Promise<Metad
   }
 }
 
-export default async function LangCataloguePage() {
+export default async function LangCataloguePage({ params }: MetadataProps) {
+  const { lang: langParam } = await params
+  const lang = langParam === 'ru' ? 'ru' : DEFAULT_LOCALE
   const queryClient = createQueryClient();
 
   await queryClient.prefetchQuery({
@@ -41,10 +43,12 @@ export default async function LangCataloguePage() {
     queryFn: fetchAllProjects,
   });
 
+  const translations = getAppTranslations(lang)
+
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <Suspense fallback={<FullSizeLoader />}>
-        <Catalogue />
+        <Catalogue translations={translations} lang={lang} />
       </Suspense>
     </HydrationBoundary>
   );

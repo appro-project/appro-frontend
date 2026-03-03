@@ -68,7 +68,7 @@ export const ProjectTabs = ({ project, translations, lang }: Props) => {
 							<ProjectLayout project={project} translations={translations} lang={lang} />
 							<ProjectStructure project={project} translations={translations} lang={lang} />
 							<Changes project={project} translations={translations} lang={lang} />
-							<Additional translations={translations} lang={lang} />
+							<Additional translations={translations} />
 							{project.isFinished && (
 								<GeneralInfo
 									title={project.title}
@@ -86,7 +86,7 @@ export const ProjectTabs = ({ project, translations, lang }: Props) => {
 						<ProjectLayout project={project} translations={translations} lang={lang} />
 					)}
 					{/*{activeTab === IProjectTubsName.SIMILAR_PROJECTS && <VisitedProjects />}*/}
-					{activeTab === IProjectTubsName.ADDITIONAL_SERVICES && <Additional translations={translations} lang={lang} />}
+					{activeTab === IProjectTubsName.ADDITIONAL_SERVICES && <Additional translations={translations} />}
 					{activeTab === IProjectTubsName.COMPOSITION_OF_PROJECT && (
 						<ProjectStructure project={project} translations={translations} lang={lang} />
 					)}

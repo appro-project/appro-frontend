@@ -84,6 +84,7 @@ export const ProjectStructure = ({ project, translations, lang }: Props) => {
 					generalArea={project.generalArea}
 					projectPrice={project.projectPrice}
 					timeToCreate={project.timeToCreate}
+					translations={translations}
 				/>
 			</div>
 		</section>

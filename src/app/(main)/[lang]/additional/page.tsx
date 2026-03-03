@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Container } from '@/containers/hoc/container/container'
 import { VisitedProjects } from '@/containers/visited-projects/visited-projects'
 import { Additional } from '@/features/project/additional/additional.component'
-import { getServerTranslations } from '@/i18n/server'
+import { getAppTranslations, getServerTranslations } from '@/i18n/server'
 import { DEFAULT_LOCALE } from '@/i18n/locales'
 import { getAlternates, getBaseOpenGraph } from '@/utils/seo/alternates'
 
@@ -27,12 +27,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function LangAdditionalPage() {
+export default async function LangAdditionalPage({ params }: Props) {
+  const { lang: langParam } = await params
+  const lang = langParam === 'ru' ? 'ru' : DEFAULT_LOCALE
+  const translations = getAppTranslations(lang)
   return (
     <section>
       <Container>
-        <Additional />
-        <VisitedProjects />
+        <Additional translations={translations} />
+        <VisitedProjects translations={translations} lang={lang} />
       </Container>
     </section>
   )

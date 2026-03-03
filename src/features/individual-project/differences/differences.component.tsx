@@ -5,7 +5,6 @@ import classes from './differences.module.scss'
 
 type Props = {
 	translations: TranslationsRecord
-	lang: string
 }
 
 export const Differences = memo(function Differences({ translations }: Props) {

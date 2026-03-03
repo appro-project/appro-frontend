@@ -6,7 +6,6 @@ import { StepInfo, steps } from '@/constants/steps'
 
 type Props = {
 	translations: TranslationsRecord
-	lang: string
 }
 
 export const Steps = memo(function Steps({ translations }: Props) {

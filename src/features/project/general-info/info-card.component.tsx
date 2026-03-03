@@ -117,7 +117,7 @@ export const InfoCard = (props: InfoCardProps) => {
 							checked={buildingIntention}
 							onChange={handleChangeBuildingIntention}
 						/>
-						<label htmlFor={'buildingIntention'}>
+						<label htmlFor={'buildingIntention'} className={classes.GeneralInfo_BuildingIntentionLabel}>
 							{t('project.description.add_building_intention')}
 						</label>
 					</div>

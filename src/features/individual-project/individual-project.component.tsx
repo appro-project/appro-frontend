@@ -1,3 +1,4 @@
+'use client'
 import { createT } from '@/i18n/create-t'
 import type { TranslationsRecord } from '@/i18n/create-t'
 import type { Locale } from '@/i18n/locales'
@@ -31,7 +32,7 @@ export const IndividualProject = ({ translations, lang }: IndividualProjectProps
 				</p>
 
 				<div className={classes['individual-project__differences-wrapper']}>
-					<Differences translations={translations} lang={lang} />
+					<Differences translations={translations} />
 				</div>
 
 				<p className={classes['individual-project__description']}>
@@ -45,11 +46,11 @@ export const IndividualProject = ({ translations, lang }: IndividualProjectProps
 				</p>
 
 				<div className={classes['individual-project__steps-wrapper']}>
-					<Steps translations={translations} lang={lang} />
+					<Steps translations={translations} />
 				</div>
 
 				<div className={classes['individual-project__order-wrapper']}>
-					<Order translations={translations} lang={lang} />
+					<Order translations={translations} />
 				</div>
 			</Container>
             

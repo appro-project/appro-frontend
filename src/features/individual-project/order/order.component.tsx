@@ -8,7 +8,6 @@ import SuccessPopup from '@/components/success-popup/success-popup.component'
 
 type Props = {
 	translations: TranslationsRecord
-	lang: string
 }
 
 export const Order = memo(function Order({ translations }: Props) {
@@ -38,7 +37,7 @@ export const Order = memo(function Order({ translations }: Props) {
 			</div>
 
 			<ContactForm onFormSubmit={showSuccessMessage} translations={translations} />
-			{successMessageVisible && <SuccessPopup />}
+			{successMessageVisible && <SuccessPopup translations={translations} />}
 		</div>
 	)
 })
