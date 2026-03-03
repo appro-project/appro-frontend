@@ -8,7 +8,7 @@ import React, { FC } from 'react'
 import { ProjectProps } from './model'
 import { styleOptions } from '@/api/model'
 
-export const BasicInfo: FC<ProjectProps> = ({ projectDto, dispatch, mode }) => {
+export const BasicInfo: FC<ProjectProps> = ({ projectDto, dispatch, mode, translations }) => {
 	const view = mode === 'view'
 
 	return (
@@ -67,6 +67,7 @@ export const BasicInfo: FC<ProjectProps> = ({ projectDto, dispatch, mode }) => {
 					options={styleOptions}
 					required={true}
 					disabled={view}
+					translations={translations}
 					handleProperty={e =>
 						dispatch({ type: 'style', payload: e.target.value })
 					}

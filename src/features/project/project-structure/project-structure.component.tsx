@@ -5,15 +5,17 @@ import draw_image from '@/assets/img/project-page/draw.svg'
 import { InfoCard } from '@/features/project/general-info/info-card.component'
 import { ProjectDto } from '@/api/model'
 import Image from 'next/image'
-
-import { useTranslation } from 'react-i18next'
+import Link from 'next/link'
+import { createT, type TranslationsRecord } from '@/i18n/create-t'
+import { localePath, type Locale } from '@/i18n/locales'
 
 interface Props {
 	project: ProjectDto
+	translations: TranslationsRecord
+	lang: Locale
 }
-
-export const ProjectStructure = ({ project }: Props) => {
-	const { t } = useTranslation()
+export const ProjectStructure = ({ project, translations, lang }: Props) => {
+	const t = createT(translations)
 
 	return (
 		<section className='project-section project-structure'>
@@ -25,12 +27,12 @@ export const ProjectStructure = ({ project }: Props) => {
 					<div className='project-section__text'>
 						<p>{t('project.composition.description1')}</p>
 						<p>{t('project.composition.description2')}</p>
-						<a
-							href='/example-project'
+						<Link
+							href={localePath('/example-project', lang)}
 							className='project-structure__button yellow-button yellow-button_16'
 						>
 							{t('project.composition.view_project_button')}
-						</a>
+						</Link>
 					</div>
 					<div className='project-structure__wrapper'>
 						<div className='illustrated-list'>
@@ -82,6 +84,7 @@ export const ProjectStructure = ({ project }: Props) => {
 					generalArea={project.generalArea}
 					projectPrice={project.projectPrice}
 					timeToCreate={project.timeToCreate}
+					translations={translations}
 				/>
 			</div>
 		</section>

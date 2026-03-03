@@ -1,4 +1,6 @@
-import { useTranslation } from 'react-i18next'
+'use client'
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
@@ -11,8 +13,12 @@ import main_plan from '@/assets/img/project-page/main-plan.svg'
 import pen from '@/assets/img/project-page/pen.svg'
 import paint from '@/assets/img/project-page/paint.svg'
 
-export const Additional = () => {
-	const { t } = useTranslation()
+type AdditionalProps = {
+	translations: TranslationsRecord
+}
+
+export const Additional = ({ translations }: AdditionalProps) => {
+	const t = createT(translations)
 
 	const { openModal } = useModalStore()
 	const handleOpenModal = () => {

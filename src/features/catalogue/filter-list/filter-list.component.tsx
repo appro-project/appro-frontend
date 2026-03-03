@@ -10,6 +10,8 @@ import { getSearchUri } from '@/services/data'
 import { RangeFilterBlock } from './range-filter/range-filter-block'
 import { CheckboxFilterBlock } from './checkbox-filter/checkbox-filter-block'
 import { getValidRangeSearchParam } from '@/services/util'
+import type { TranslationsRecord } from '@/i18n/create-t'
+import type { Locale } from '@/i18n/locales'
 
 interface SearchOption {
 	id: string
@@ -20,9 +22,11 @@ interface SearchOption {
 interface StateProps {
 	applyFilter(searchParams: URLSearchParams): void
 	closeDrawer?: () => void
+	translations: TranslationsRecord
+	lang: Locale
 }
 
-export const FilterList = ({ applyFilter, closeDrawer }: StateProps) => {
+export const FilterList = ({ applyFilter, closeDrawer, translations, lang }: StateProps) => {
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
 	const router = useRouter()
@@ -97,6 +101,8 @@ export const FilterList = ({ applyFilter, closeDrawer }: StateProps) => {
 					filterId={'area'}
 					initialRange={areaInitRange ? areaInitRange : undefined}
 					applyFilter={option => rangeOptionClicked('area', option)}
+					translations={translations}
+					lang={lang}
 				/>
 				<CheckboxFilterBlock
 					filterId={'floor'}
@@ -106,6 +112,8 @@ export const FilterList = ({ applyFilter, closeDrawer }: StateProps) => {
 					applyFilter={option =>
 						singleOptionClicked('floor', FilterType.CHECKBOX, option)
 					}
+					translations={translations}
+					lang={lang}
 				/>
 				<CheckboxFilterBlock
 					filterId={'bedroom'}
@@ -115,6 +123,8 @@ export const FilterList = ({ applyFilter, closeDrawer }: StateProps) => {
 					applyFilter={option =>
 						singleOptionClicked('bedroom', FilterType.CHECKBOX, option)
 					}
+					translations={translations}
+					lang={lang}
 				/>
 				<CheckboxFilterBlock
 					filterId={'garage'}
@@ -122,6 +132,8 @@ export const FilterList = ({ applyFilter, closeDrawer }: StateProps) => {
 					applyFilter={option =>
 						singleOptionClicked('garage', FilterType.CHECKBOX, option)
 					}
+					translations={translations}
+					lang={lang}
 				/>
 				<RangeFilterBlock
 					filterId={'projectPrice'}
@@ -129,6 +141,8 @@ export const FilterList = ({ applyFilter, closeDrawer }: StateProps) => {
 						projectPriceInitRange ? projectPriceInitRange : undefined
 					}
 					applyFilter={option => rangeOptionClicked('projectPrice', option)}
+					translations={translations}
+					lang={lang}
 				/>
 
 				<RangeFilterBlock
@@ -137,6 +151,8 @@ export const FilterList = ({ applyFilter, closeDrawer }: StateProps) => {
 						buildingPriceInitRange ? buildingPriceInitRange : undefined
 					}
 					applyFilter={option => rangeOptionClicked('buildingPrice', option)}
+					translations={translations}
+					lang={lang}
 				/>
 
 				<CheckboxFilterBlock
@@ -147,6 +163,8 @@ export const FilterList = ({ applyFilter, closeDrawer }: StateProps) => {
 					applyFilter={option =>
 						singleOptionClicked('style', FilterType.CHECKBOX, option)
 					}
+					translations={translations}
+					lang={lang}
 				/>
 			</div>
 		</div>

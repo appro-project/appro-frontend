@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
 import classes from '@/features/main-page/feedback-form/feedback.module.scss'
 import { Controller, useForm } from 'react-hook-form'
 import { TextInput } from '@/components/ui/text-input/text-input.component'
@@ -15,15 +16,19 @@ interface OrderModalProps {
 	project: string
 	title: string
 	onFormSubmit: () => void
+	translations: TranslationsRecord
+	lang: string
 }
 
 const OrderModal = ({
 	onClose,
 	project,
 	title,
-	onFormSubmit
+	onFormSubmit,
+	translations,
+	lang
 }: OrderModalProps) => {
-	const { t } = useTranslation()
+	const t = createT(translations)
 	const [error, setError] = useState(false)
 	const [loading, setLoading] = useState(false)
 	const {

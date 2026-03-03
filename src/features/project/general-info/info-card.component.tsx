@@ -2,8 +2,9 @@ import { ChangeEvent, useState } from 'react'
 import { NumericFormat } from 'react-number-format'
 import classes from './general-info.module.scss'
 import { Button, ButtonType } from '@/components/ui/button/button.component'
-
-import { useTranslation } from 'react-i18next'
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
+import type { Locale } from '@/i18n/locales'
 import { usePathname } from 'next/navigation'
 import { siteHost } from '@/services/server-data/server-data'
 import { useModalStore } from '@/modal/order-modal-container.store'
@@ -18,6 +19,8 @@ export interface InfoCardProps {
 	generalArea: number
 	timeToCreate: number
 	projectPrice: number
+	translations?: TranslationsRecord
+	lang?: Locale
 }
 
 export const InfoCard = (props: InfoCardProps) => {
@@ -32,7 +35,7 @@ export const InfoCard = (props: InfoCardProps) => {
 		setBuildingIntention(e.target.checked)
 	}
 
-	const { t } = useTranslation()
+	const t = createT(props.translations ?? null)
 
 	const pathname = usePathname()
 	const projectLink = siteHost + pathname
@@ -114,7 +117,7 @@ export const InfoCard = (props: InfoCardProps) => {
 							checked={buildingIntention}
 							onChange={handleChangeBuildingIntention}
 						/>
-						<label htmlFor={'buildingIntention'}>
+						<label htmlFor={'buildingIntention'} className={classes.GeneralInfo_BuildingIntentionLabel}>
 							{t('project.description.add_building_intention')}
 						</label>
 					</div>

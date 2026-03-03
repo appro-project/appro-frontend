@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
+import { createT } from "@/i18n/create-t";
+import type { TranslationsRecord } from "@/i18n/create-t";
 import Link from "next/link";
+import { localePath, type Locale } from "@/i18n/locales";
 import Image from "next/image";
 
 import Lightbox from "react-image-lightbox";
@@ -13,9 +15,14 @@ import { Button } from "@/components/ui/button/button.component";
 import team_photo from "@/assets/img/about-us/about-main-1.jpg";
 import certificate from "@/assets/img/main/about-us/certificate.jpg";
 
-export const About = () => {
+type AboutProps = {
+  translations: TranslationsRecord;
+  lang: Locale;
+};
+
+export const About = ({ translations, lang }: AboutProps) => {
   const [isOpen, setOpen] = useState(false);
-  const { t } = useTranslation();
+  const t = createT(translations);
 
   return (
     <section className={classes["about"]}>
@@ -48,7 +55,7 @@ export const About = () => {
               <p>{t("main.about_us.description5")}</p>
             </div>
             <div className={classes["about__description-details"]}>
-              <Link href="/about">
+              <Link href={localePath("/about", lang)}>
                 <Button title={t("main.about_us.details")} />
               </Link>
             </div>

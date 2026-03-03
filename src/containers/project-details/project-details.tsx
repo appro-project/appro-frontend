@@ -4,19 +4,24 @@ import Link from 'next/link'
 
 import { FC, memo } from 'react'
 import { ProjectDto } from '@/api/model'
-import { useTranslation } from 'react-i18next'
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
+import type { Locale } from '@/i18n/locales'
+import { localePath } from '@/i18n/locales'
 
 interface ProjectDetailsProps {
 	projectData: ProjectDto
+	translations: TranslationsRecord
+	lang: Locale
 }
 
 export const ProjectDetails: FC<ProjectDetailsProps> = memo(
-	function ProjectDetails({ projectData }) {
-		const { t } = useTranslation()
+	function ProjectDetails({ projectData, translations, lang }) {
+		const t = createT(translations)
 
 		return (
 			<Link
-				href={`/catalogue/${projectData.id}`}
+				href={localePath(`/catalogue/${projectData.id}`, lang)}
 				className={classes['project-details']}
 			>
 				<div className={classes['project-details__content']}>

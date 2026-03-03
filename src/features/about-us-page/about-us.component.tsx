@@ -1,5 +1,6 @@
 'use client'
-import { useTranslation } from 'react-i18next'
+import { createT, type TranslationsRecord } from '@/i18n/create-t'
+import type { Locale } from '@/i18n/locales'
 import Image from 'next/image'
 
 import { Container } from '@/containers/hoc/container/container'
@@ -10,8 +11,13 @@ import member_2 from '@/assets/img/about-us/member-2.jpg'
 import './about-us.scss'
 import '@/features/project/project-structure/project-structure.scss'
 
-export const AboutUs = () => {
-	const { t } = useTranslation()
+type Props = {
+	translations: TranslationsRecord
+	lang: Locale
+}
+
+export const AboutUs = ({ translations }: Props) => {
+	const t = createT(translations)
 
 	return (
 		<div>

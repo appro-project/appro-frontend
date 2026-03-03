@@ -8,8 +8,17 @@ import { About } from "@/features/main-page/about/about.component";
 import { useGetAllProjects } from "@/api/use-get-all-projects";
 import { ProjectDto } from "@/api/model";
 import { FullSizeLoader } from "@/components/full-size-loader.component";
+import type { PrinciplesTranslations } from "@/i18n/server";
+import type { TranslationsRecord } from "@/i18n/create-t";
+import type { Locale } from "@/i18n/locales";
 
-export function HomeContent() {
+type HomeContentProps = {
+  principlesTranslations: PrinciplesTranslations;
+  translations: TranslationsRecord;
+  lang: Locale;
+};
+
+export function HomeContent({ principlesTranslations, translations, lang }: HomeContentProps) {
   const { data: projects } = useGetAllProjects();
 
   if (!projects) return <FullSizeLoader />;
@@ -20,11 +29,11 @@ export function HomeContent() {
 
   return (
     <>
-      <Welcome mockProjects={welcomeProjects} />
-      <Popular />
-      <About />
-      <Principles />
-      <Feedback />
+      <Welcome mockProjects={welcomeProjects} translations={translations} lang={lang} />
+      <Popular translations={translations} lang={lang} />
+      <About translations={translations} lang={lang} />
+      <Principles principlesTranslations={principlesTranslations} />
+      <Feedback translations={translations} lang={lang} />
     </>
   );
 }

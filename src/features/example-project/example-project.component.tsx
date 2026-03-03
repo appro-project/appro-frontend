@@ -1,12 +1,19 @@
+'use client'
 import { Container } from '@/containers/hoc/container/container'
 import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { createT, type TranslationsRecord } from '@/i18n/create-t'
+import type { Locale } from '@/i18n/locales'
 import classes from './example-project.module.scss'
 import ImageCarousel from './image-carousel/image-carousel.component'
 import { plan1, plan2, plan3, plan4 } from './import-images'
 
-export const ExampleProject = () => {
-	const { t } = useTranslation();
+type Props = {
+	translations: TranslationsRecord
+	lang: Locale
+}
+
+export const ExampleProject = ({ translations }: Props) => {
+	const t = createT(translations);
 
 	return (
 		<div className={classes.exampleProject}>

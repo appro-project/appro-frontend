@@ -1,6 +1,8 @@
 import { Fragment, memo, useState } from 'react'
 import { Range } from 'react-range'
-import { useTranslation } from 'react-i18next'
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
+import type { Locale } from '@/i18n/locales'
 
 import classes from './range-filter-block.module.scss'
 import catalogueFiltersInfo, {
@@ -15,11 +17,13 @@ interface Props {
 	initialRange?: { from: string; to: string }
 
 	applyFilter(option: RangeOption): void
+	translations: TranslationsRecord
+	lang: Locale
 }
 
 export const RangeFilterBlock = memo(
-	function RangeFilterBlock({ filterId, initialRange, applyFilter }: Props) {
-		const { t } = useTranslation()
+	function RangeFilterBlock({ filterId, initialRange, applyFilter, translations, lang }: Props) {
+		const t = createT(translations)
 		
 		const filterInfo = catalogueFiltersInfo.get(filterId)
 		const option = filterInfo?.options as RangeOption

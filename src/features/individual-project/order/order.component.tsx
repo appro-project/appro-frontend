@@ -1,13 +1,17 @@
-import { memo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useState } from 'react'
+'use client'
+import { memo, useState } from 'react'
+import { createT, type TranslationsRecord } from '@/i18n/create-t'
 
 import classes from './order.module.scss'
 import { ContactForm } from './contact-form/contact-form.component'
 import SuccessPopup from '@/components/success-popup/success-popup.component'
 
-export const Order = memo(function Order() {
-	const { t } = useTranslation()
+type Props = {
+	translations: TranslationsRecord
+}
+
+export const Order = memo(function Order({ translations }: Props) {
+	const t = createT(translations)
 	const [successMessageVisible, setSuccessMessageVisible] = useState(false)
 	const showSuccessMessage = () => {
 		setSuccessMessageVisible(true)
@@ -32,8 +36,8 @@ export const Order = memo(function Order() {
 				<p>{t('individual.order.description2')}</p>
 			</div>
 
-			<ContactForm onFormSubmit={showSuccessMessage} />
-			{successMessageVisible && <SuccessPopup />}
+			<ContactForm onFormSubmit={showSuccessMessage} translations={translations} />
+			{successMessageVisible && <SuccessPopup translations={translations} />}
 		</div>
 	)
 })

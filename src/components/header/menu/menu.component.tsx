@@ -1,14 +1,18 @@
 'use client'
 import classes from './menu.module.scss'
 import Logo from '@/assets/img/logo.svg'
-import { contactInfo, MenuLinkInfo, menuLinks } from '@/constants'
+import { contactInfo, menuLinks } from '@/constants'
 import Link from 'next/link'
-import { useTranslation } from 'react-i18next'
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
 import Image from 'next/image'
+import { localePath, type Locale } from '@/i18n/locales'
 
 interface Props {
 	isOpened: boolean
 	closeMenu(): void
+	translations: TranslationsRecord
+	lang: Locale
 }
 
 export const Menu = (props: Props) => {
@@ -16,11 +20,12 @@ export const Menu = (props: Props) => {
 	if (props.isOpened) {
 		menuClasses.push(classes['active'])
 	}
-	const { t } = useTranslation()
+	const t = createT(props.translations)
+	const lang = props.lang
 	return (
 		<div className={menuClasses.join(' ')}>
 			<div className={classes['menu__header']}>
-				<Link href='/' className={classes['menu__logo']}>
+				<Link href={localePath('/', lang)} className={classes['menu__logo']}>
 					<Image src={Logo} alt='logo' />
 				</Link>
 				<div className={classes['menu__close']} onClick={props.closeMenu} />
@@ -29,7 +34,7 @@ export const Menu = (props: Props) => {
 				<ul className={classes['menu__list']}>
 					{menuLinks.map((link, index) => (
 						<div onClick={props.closeMenu} key={'menu-' + index}>
-							<MenuItem name={t(link.name)} path={link.path} />
+							<MenuItem name={t(link.name)} href={localePath(link.path, lang)} />
 						</div>
 					))}
 				</ul>
@@ -50,12 +55,10 @@ export const Menu = (props: Props) => {
 	)
 }
 
-const MenuItem = (props: MenuLinkInfo) => {
-	return (
-		<li>
-			<Link href={props.path} className={classes['menu__link']}>
-				{props.name}
-			</Link>
-		</li>
-	)
-}
+const MenuItem = ({ name, href }: { name: string; href: string }) => (
+	<li>
+		<Link href={href} className={classes['menu__link']}>
+			{name}
+		</Link>
+	</li>
+)

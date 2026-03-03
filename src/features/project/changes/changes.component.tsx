@@ -1,4 +1,6 @@
-import { useTranslation } from 'react-i18next'
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
+import type { Locale } from '@/i18n/locales'
 import './changes.scss'
 import project_modification from '@/assets/img/project-page/project-modification.jpg'
 import { Button, ButtonType } from '@/components/ui/button/button.component'
@@ -10,10 +12,12 @@ import Image from 'next/image'
 
 interface IChangesProps {
 	project: ProjectDto
+	translations: TranslationsRecord
+	lang: Locale
 }
 
-export const Changes = ({ project }: IChangesProps) => {
-	const { t } = useTranslation()
+export const Changes = ({ project, translations, lang }: IChangesProps) => {
+	const t = createT(translations)
 
 	const pathname = usePathname()
 	const projectLink = siteHost + pathname

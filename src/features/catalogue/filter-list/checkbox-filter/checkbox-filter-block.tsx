@@ -1,5 +1,7 @@
 import { useState, memo } from 'react'
-import { useTranslation } from 'react-i18next'
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
+import type { Locale } from '@/i18n/locales'
 
 import classes from './checkbox-filter-block.module.scss'
 import catalogueFiltersInfo, {
@@ -12,11 +14,13 @@ interface Props {
 	initialOptions?: string[]
 
 	applyFilter(option: SingleOption): void
+	translations: TranslationsRecord
+	lang: Locale
 }
 
 export const CheckboxFilterBlock = memo(
-	function CheckboxFilterBlock({ filterId, initialOptions, applyFilter }: Props) {
-		const { t } = useTranslation()
+	function CheckboxFilterBlock({ filterId, initialOptions, applyFilter, translations, lang }: Props) {
+		const t = createT(translations)
 		
 		const filterInfo = catalogueFiltersInfo.get(filterId)
 

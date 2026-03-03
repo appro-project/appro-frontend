@@ -1,9 +1,11 @@
 import { ProjectDto } from '@/api/model'
+import type { TranslationsRecord } from '@/i18n/create-t'
 
 export interface ProjectProps {
 	projectDto: ProjectDto
 	dispatch: (action: ProjectPropAction) => void
 	mode: 'view' | 'edit' | 'add'
+	translations: TranslationsRecord
 }
 
 export interface ProjectPropAction {

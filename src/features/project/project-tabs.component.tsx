@@ -9,21 +9,25 @@ import { IProjectTubsName, tubsArray } from '@/features/project/interfaces'
 import classes from '@/components/ui/tabs/tabs.module.scss'
 import { Tab } from '@/components/ui/tabs/tab/tab.component'
 import { ProjectDto } from '@/api/model'
-import { useTranslation } from 'react-i18next'
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
 import { getDescription } from '@/utils/project-util'
+import type { Locale } from '@/i18n/locales'
 
 interface Props {
 	project: ProjectDto
+	translations: TranslationsRecord
+	lang: Locale
 }
 
-export const ProjectTabs = ({ project }: Props) => {
+export const ProjectTabs = ({ project, translations, lang }: Props) => {
 	const [activeTab, setActiveTab] = useState<IProjectTubsName>(tubsArray[0])
 
 	const onClickTabItem = (value: IProjectTubsName) => {
 		setActiveTab(value)
 	}
 
-	const { t } = useTranslation()
+	const t = createT(translations)
 
 	return (
 		<>
@@ -57,12 +61,14 @@ export const ProjectTabs = ({ project }: Props) => {
 								mainImage={project.mainImage?.path}
 								images={project.images.map(image => image.path)}
 								videoUrl={project.videoUrl}
-								description={getDescription(project)}
+								description={getDescription(project, lang)}
+								translations={translations}
+								lang={lang}
 							/>
-							<ProjectLayout project={project} />
-							<ProjectStructure project={project} />
-							<Changes project={project} />
-							<Additional />
+							<ProjectLayout project={project} translations={translations} lang={lang} />
+							<ProjectStructure project={project} translations={translations} lang={lang} />
+							<Changes project={project} translations={translations} lang={lang} />
+							<Additional translations={translations} />
 							{project.isFinished && (
 								<GeneralInfo
 									title={project.title}
@@ -70,20 +76,22 @@ export const ProjectTabs = ({ project }: Props) => {
 									projectPrice={project.projectPrice}
 									timeToCreate={project.timeToCreate}
 									images={project.photos.map(image => image.path)}
+									translations={translations}
+									lang={lang}
 								/>
 							)}
 						</>
 					)}
 					{activeTab === IProjectTubsName.LAYAOUT && (
-						<ProjectLayout project={project} />
+						<ProjectLayout project={project} translations={translations} lang={lang} />
 					)}
 					{/*{activeTab === IProjectTubsName.SIMILAR_PROJECTS && <VisitedProjects />}*/}
-					{activeTab === IProjectTubsName.ADDITIONAL_SERVICES && <Additional />}
+					{activeTab === IProjectTubsName.ADDITIONAL_SERVICES && <Additional translations={translations} />}
 					{activeTab === IProjectTubsName.COMPOSITION_OF_PROJECT && (
-						<ProjectStructure project={project} />
+						<ProjectStructure project={project} translations={translations} lang={lang} />
 					)}
 					{activeTab === IProjectTubsName.ALTERNATIVE && (
-						<Changes project={project} />
+						<Changes project={project} translations={translations} lang={lang} />
 					)}
 					{project.isFinished &&
 						activeTab === IProjectTubsName.PROJECT_IN_PROGRESS && (
@@ -93,10 +101,12 @@ export const ProjectTabs = ({ project }: Props) => {
 								projectPrice={project.projectPrice}
 								timeToCreate={project.timeToCreate}
 								images={project.photos.map(photo => photo.path)}
+								translations={translations}
+								lang={lang}
 							/>
 						)}
 				</div>
-				<VisitedProjects />
+				<VisitedProjects translations={translations} lang={lang} />
 			</div>
 		</>
 	)

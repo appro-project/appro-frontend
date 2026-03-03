@@ -8,20 +8,26 @@ import MenuIcon from '@/components/header/menu-icon/menu-icon.component'
 import { Menu } from './menu/menu.component'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useTranslation } from 'react-i18next'
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
 import { LanguageSwitcher } from './language-switcher.component'
 import { useModalStore } from '@/modal/order-modal-container.store'
 import Image from 'next/image'
+import { localePath, type Locale } from '@/i18n/locales'
 
-export const Header = () => {
+type HeaderProps = {
+	translations: TranslationsRecord
+	lang: Locale
+}
+
+export const Header = ({ translations, lang }: HeaderProps) => {
 	const [isOpened, setIsOpened] = useState(false)
 	const pathname = usePathname()
-	const { t } = useTranslation()
+	const t = createT(translations)
 
 	const headerClasses = [classes['header']]
-	// if main page header should be transparent
-
-	if ('/' === pathname) {
+	const isHome = pathname === '/' || pathname === '/ru'
+	if (isHome) {
 		headerClasses.push(classes['header--transparent'])
 	}
 
@@ -36,7 +42,7 @@ export const Header = () => {
 			<Container>
 				<div className={classes['header__container']}>
 					<div className={classes['header__top']}>
-						<Link href={'/'} className={createHeaderTopItemClass('header__logo')}>
+						<Link href={localePath('/', lang)} className={createHeaderTopItemClass('header__logo')}>
 							<Image src={Logo} alt='logo' className={classes['header__logo-img']} />
 						</Link>
 
@@ -49,6 +55,7 @@ export const Header = () => {
 
 						<LanguageSwitcher
 							style={createHeaderTopItemClass('header__top-item-lang')}
+							lang={lang}
 						/>
 
 						<div
@@ -68,7 +75,7 @@ export const Header = () => {
 						</div>
 					</div>
 
-					<Menu isOpened={isOpened} closeMenu={() => setIsOpened(false)} />
+					<Menu isOpened={isOpened} closeMenu={() => setIsOpened(false)} translations={translations} lang={lang} />
 				</div>
 			</Container>
 		</header>

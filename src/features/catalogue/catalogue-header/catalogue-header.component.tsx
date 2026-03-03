@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
+import type { Locale } from '@/i18n/locales'
 import {
 	SortDetails,
 	SortDirection
@@ -13,14 +15,18 @@ interface StateProps {
 	count: number
 	sortDetails?: SortDetails
 	applySort(search: URLSearchParams): void
+	translations: TranslationsRecord
+	lang: Locale
 }
 
 export const CatalogueHeader = ({
 	count,
 	sortDetails,
-	applySort
+	applySort,
+	translations,
+	lang
 }: StateProps) => {
-	const { t } = useTranslation()
+	const t = createT(translations)
 	const [rotatedItems, setRotatedItems] = useState<{ [key: string]: boolean }>({})
 	const pathname = usePathname()
 	const searchParams = useSearchParams()

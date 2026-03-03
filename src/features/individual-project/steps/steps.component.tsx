@@ -1,12 +1,15 @@
 import { memo } from 'react'
-import { useTranslation } from 'react-i18next'
+import { createT, type TranslationsRecord } from '@/i18n/create-t'
 
 import classes from './steps.module.scss'
 import { StepInfo, steps } from '@/constants/steps'
-import { TFunction } from 'i18next'
 
-export const Steps = memo(function Steps() {
-	const { t } = useTranslation()
+type Props = {
+	translations: TranslationsRecord
+}
+
+export const Steps = memo(function Steps({ translations }: Props) {
+	const t = createT(translations)
 	return (
 		<div className={classes['steps']}>
 			<h3 className={classes['steps__title']}>{t('individual.steps.title')}</h3>
@@ -17,7 +20,7 @@ export const Steps = memo(function Steps() {
 	)
 })
 
-const createStep = (step: StepInfo, stepNumber: number, t: TFunction) => {
+const createStep = (step: StepInfo, stepNumber: number, t: (key: string) => string) => {
 	return (
 		<div className={classes['steps__step-item']} key={stepNumber}>
 			<div className={classes['steps__step-number']}>{stepNumber}</div>

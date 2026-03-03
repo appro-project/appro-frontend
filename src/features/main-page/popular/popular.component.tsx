@@ -2,12 +2,19 @@
 import { Container } from '@/containers/hoc/container/container'
 import { PopularCategory } from './popular-category/popular-category.component'
 import classes from './popular.module.scss'
-import { useTranslation } from 'react-i18next'
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
+import type { Locale } from '@/i18n/locales'
 import { useSelector } from 'react-redux'
 import { getPopularCategories } from '@/redux/selectors'
 
-export const Popular = () => {
-	const { t } = useTranslation()
+type PopularProps = {
+	translations: TranslationsRecord
+	lang: Locale
+}
+
+export const Popular = ({ translations, lang }: PopularProps) => {
+	const t = createT(translations)
 	const popularCategories = useSelector(getPopularCategories)
 
 	return (
@@ -20,7 +27,7 @@ export const Popular = () => {
 
 					<div className={classes['popular-categories__items']}>
 						{popularCategories.map((category, index) => (
-							<PopularCategory categoryData={category} key={index} />
+							<PopularCategory categoryData={category} key={index} translations={translations} lang={lang} />
 						))}
 					</div>
 				</div>

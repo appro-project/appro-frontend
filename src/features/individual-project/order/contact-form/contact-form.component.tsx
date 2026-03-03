@@ -1,9 +1,10 @@
+'use client'
 import classes from '../order.module.scss'
 import { TextInput } from '@/components/ui/text-input/text-input.component'
 import { TextArea } from '@/components/ui/text-area/text-area.component'
 import { Button, ButtonType } from '@/components/ui/button/button.component'
-import { useTranslation } from 'react-i18next'
-import { FC, useState } from 'react'
+import { createT, type TranslationsRecord } from '@/i18n/create-t'
+import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { IFeedbackForm } from '@/features/main-page/feedback-form/feedback-form.component'
 import {
@@ -13,10 +14,11 @@ import {
 
 interface ContactFormProps {
 	onFormSubmit: () => void
+	translations: TranslationsRecord
 }
 
-export const ContactForm: React.FC<ContactFormProps> = ({ onFormSubmit }) => {
-	const { t } = useTranslation()
+export const ContactForm: React.FC<ContactFormProps> = ({ onFormSubmit, translations }) => {
+	const t = createT(translations)
 	const [loading, setLoading] = useState(false)
 	const { control, handleSubmit, reset } = useForm<IFeedbackForm>({
 		defaultValues: {

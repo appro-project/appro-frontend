@@ -1,0 +1,56 @@
+import type { Metadata } from 'next'
+import {
+  dehydrate,
+  HydrationBoundary,
+} from "@tanstack/react-query";
+import { fetchAllProjects, PROJECTS_QUERY_KEY } from "@/api/projects-query";
+import { HomeContent } from "@/features/main-page/home-content";
+import { createQueryClient } from "@/utils/react-query/react-query-util";
+import { getServerTranslations, getPrinciplesTranslations, getAppTranslations } from "@/i18n/server";
+import { DEFAULT_LOCALE } from "@/i18n/locales";
+import { getAlternates, getBaseOpenGraph } from '@/utils/seo/alternates'
+
+type Props = {
+  params: Promise<{ lang: string }>;
+};
+
+type MetadataProps = {
+  params: Promise<{ lang: string }>
+}
+
+export async function generateMetadata({ params }: MetadataProps): Promise<Metadata> {
+  const { lang: langParam } = await params
+  const locale = langParam === 'ru' ? 'ru' : 'ua'
+  const t = await getServerTranslations(locale)
+  return {
+    title: t('meta.site_title'),
+    description: t('meta.site_description'),
+    alternates: getAlternates('/'),
+    openGraph: {
+      ...getBaseOpenGraph(locale as 'ua' | 'ru'),
+      title: t('meta.site_title'),
+      description: t('meta.site_description'),
+      type: 'website',
+    },
+  }
+}
+
+export default async function LangHomePage({ params }: Props) {
+  const { lang: langParam } = await params;
+  const lang = langParam === "ru" ? "ru" : DEFAULT_LOCALE;
+  const queryClient = createQueryClient();
+  const [_, principlesTranslations] = await Promise.all([
+    queryClient.prefetchQuery({
+      queryKey: PROJECTS_QUERY_KEY,
+      queryFn: fetchAllProjects,
+    }),
+    getPrinciplesTranslations(lang),
+  ]);
+  const translations = getAppTranslations(lang);
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <HomeContent principlesTranslations={principlesTranslations} translations={translations} lang={lang} />
+    </HydrationBoundary>
+  );
+}

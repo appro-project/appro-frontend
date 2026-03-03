@@ -4,11 +4,14 @@ import { ImageCarousel } from '@/features/project/image-carousel/image-carousel.
 import { NumericFormat } from 'react-number-format'
 import '@/features/project/additional/additional.scss'
 import { ProjectDto } from '@/api/model'
-
-import { useTranslation } from 'react-i18next'
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
+import type { Locale } from '@/i18n/locales'
 
 interface Props {
 	project: ProjectDto
+	translations: TranslationsRecord
+	lang: Locale
 }
 
 export const ProjectLayout = (props: Props) => {
@@ -22,7 +25,7 @@ export const ProjectLayout = (props: Props) => {
 
 	const isAttic = project.floors.some(f => f.isAttic)
 
-	const { t } = useTranslation()
+	const t = createT(props.translations)
 
 	return (
 		<section className={classes.ProjectLayout}>

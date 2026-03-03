@@ -1,6 +1,8 @@
 'use client'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { createT } from '@/i18n/create-t'
+import type { TranslationsRecord } from '@/i18n/create-t'
+import type { Locale } from '@/i18n/locales'
 
 import classes from './feedback.module.scss'
 import { Container } from '@/containers/hoc/container/container'
@@ -21,7 +23,12 @@ import {
 		project?: string
  }
 
- export const Feedback = () => {
+ type FeedbackProps = {
+		translations: TranslationsRecord
+		lang: Locale
+	}
+
+ export const Feedback = ({ translations, lang }: FeedbackProps) => {
 		const [error, setError] = useState(false)
 		const [loading, setLoading] = useState(false)
 		const {
@@ -68,7 +75,7 @@ import {
 			showSuccessMessage()
 		}
 
-		const { t } = useTranslation()
+		const t = createT(translations)
 
 		return (
 			<section id={'feedback-form'} className={classes['feedback']}>
