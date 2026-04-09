@@ -33,7 +33,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onFormSubmit, translat
 			setLoading(true)
 
 			await Promise.all([
-				axiosPostFeedback({ ...value }),
+				// axiosPostFeedback({ ...value }),
 				axiosPostTelegramFeedback({ ...value })
 			])
 

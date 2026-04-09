@@ -52,7 +52,7 @@ const OrderModal = ({
 			setLoading(true)
 
 			await Promise.all([
-				axiosPostFeedback({ ...value, project }),
+				// axiosPostFeedback({ ...value, project }),
 				axiosPostTelegramFeedback({ ...value, project })
 			])
 
