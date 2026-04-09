@@ -79,7 +79,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onFormSubmit, translat
 					rules={{
 						required: t('form_error_messages.not_empty'),
 						pattern: {
-							value: /^\+380 \d{9}$/,
+							value: /^\+38\d{10}$/,
 							message: t('form_error_messages.phone')
 						}
 					}}
@@ -88,7 +88,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onFormSubmit, translat
 							<TextInput
 								error={!!error}
 								{...props}
-								mask={'+380 _________'}
+								mask={'+38__________'}
 								placeholder={t('individual.contact_form.phone')}
 							/>
 							{error && (

@@ -143,7 +143,7 @@ const OrderModal = ({
 							rules={{
 								required: t('form_error_messages.not_empty'),
 								pattern: {
-									value: /^\+380 \d{9}$/,
+									value: /^\+38\d{10}$/,
 									message: t('form_error_messages.phone')
 								}
 							}}
@@ -152,7 +152,7 @@ const OrderModal = ({
 									<TextInput
 										error={!!errors.phone}
 										{...props}
-										mask={'+380 _________'}
+										mask={'+38__________'}
 										placeholder={t('modal.phone')}
 									/>
 									{error && (

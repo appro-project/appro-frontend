@@ -151,7 +151,7 @@ import {
 									defaultValue={''}
 									rules={{
 										pattern: {
-											value: /^\+380 \d{9}$/,
+											value: /^\+38\d{10}$/,
 											message: t('form_error_messages.phone')
 										}
 									}}
@@ -160,7 +160,7 @@ import {
 											<TextInput
 												error={!!error}
 												{...field}
-												mask={'+380 _________'}
+												mask={'+38__________'}
 												placeholder={t('main.feedback.phone')}
 											/>
 											{error && (
