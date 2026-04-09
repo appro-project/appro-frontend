@@ -61,18 +61,18 @@ import {
 				setLoading(true)
 
 				await Promise.all([
-					axiosPostFeedback({ ...value }),
+					// axiosPostFeedback({ ...value }),
 					axiosPostTelegramFeedback({ ...value })
 				])
 
 				setLoading(false)
+				reset()
+				showSuccessMessage()
 			} catch (e) {
 				console.log(e)
 				setError(true)
-				setLoading(true)
+				setLoading(false)
 			}
-			reset()
-			showSuccessMessage()
 		}
 
 		const t = createT(translations)
@@ -207,7 +207,7 @@ import {
 							/>
 						</form>
 					</div>
-					{successMessageVisible && <SuccessPopup />}
+					{successMessageVisible && <SuccessPopup translations={translations} />}
 				</Container>
 			</section>
 		)
